@@ -5,14 +5,14 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>2.5.6</version>
+		<version>2.5.7</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.projet</groupId>
-	<artifactId>weather</artifactId>
+	<artifactId>meteoMarine</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>weather</name>
-	<description>Exam théo teinturier météo</description>
+	<name>meteoMarine</name>
+	<description>Exam théo teinturier mété</description>
 	<properties>
 		<java.version>1.8</java.version>
 	</properties>
@@ -52,12 +52,14 @@
 			<artifactId>springfox-swagger2</artifactId>
 			<version>2.6.1</version>
 		</dependency>
+
 		<dependency>
 			<groupId>io.springfox</groupId>
 			<artifactId>springfox-swagger-ui</artifactId>
 			<version>2.6.1</version>
 		</dependency>
 	</dependencies>
+
 	<build>
 		<plugins>
 			<plugin>
