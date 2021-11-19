@@ -1,0 +1,12 @@
+
+- Commande pour récupéré la météo d'une ville par son nom : 
+curl -X GET --header 'Accept: text/plain' 'http://localhost:9091/detailVille/nomVille'
+
+- Commande pour obtenir la météo des 5 prochains jours d'une ville par son nom : 
+curl -X GET --header 'Accept: text/plain' 'http://localhost:9091/getMeteo5j/nomVille'
+
+- Commande pour obtenir la météo de demain d'une ville par son nom :
+curl -X GET --header 'Accept: text/plain' 'http://localhost:9091/getMeteoDemain/nomVille'
+
+- Commande pour obtenir la météo d'une ville par son id (id d'ajaccio pour test 132932)
+curl -X GET --header 'Accept: text/plain' 'http://localhost:9090/meteoVille/idVille
