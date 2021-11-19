@@ -50,6 +50,43 @@ public class VilleApplication {
 			//return response;
 		}
 
+		//Retour de la météo le jour suivant pour une ville en passant le nom en paramètre
+
+		@ApiOperation(value = "Obtention météo pour demain", response = CurrentController.class, tags = "getMeteoDemain")
+		@RequestMapping(value = "/getMeteoDemain/{nomVille}", method = RequestMethod.GET)
+		public String getMeteoDemain(@PathVariable String nomVille) {
+			String response = restTemplate.exchange("http://dataservice.accuweather.com/locations/v1/cities/search?apikey=q80rdb2MDAlzUFIxOE18UaeMAKZwbaA1&q=" + nomVille + "&language=fr-fr",
+					HttpMethod.GET, null, new ParameterizedTypeReference<String>() {}, nomVille).getBody();
+
+			String json = response;
+			json = json.substring(1, json.length() - 1);
+			Map jsonJavaRootObject = new Gson().fromJson(json, Map.class);
+			String idVille = (String) jsonJavaRootObject.get("Key");
+
+			String resultatFinal = restTemplate.exchange("http://dataservice.accuweather.com/forecasts/v1/daily/1day/" + idVille + "?apikey=q80rdb2MDAlzUFIxOE18UaeMAKZwbaA1&language=fr-fr",
+					HttpMethod.GET, null, new ParameterizedTypeReference<String>() {}, idVille).getBody();
+
+			return resultatFinal;
+		}
+
+		//Retour de la météo le jour suivant pour une ville en passant le nom en paramètre
+
+		@ApiOperation(value = "Obtention météo pour 5j", response = CurrentController.class, tags = "getMeteo5j")
+		@RequestMapping(value = "/getMeteo5j/{nomVille}", method = RequestMethod.GET)
+		public String getMeteo5j(@PathVariable String nomVille) {
+			String response = restTemplate.exchange("http://dataservice.accuweather.com/locations/v1/cities/search?apikey=q80rdb2MDAlzUFIxOE18UaeMAKZwbaA1&q=" + nomVille + "&language=fr-fr",
+					HttpMethod.GET, null, new ParameterizedTypeReference<String>() {}, nomVille).getBody();
+
+			String json = response;
+			json = json.substring(1, json.length() - 1);
+			Map jsonJavaRootObject = new Gson().fromJson(json, Map.class);
+			String idVille = (String) jsonJavaRootObject.get("Key");
+
+			String resultatFinal = restTemplate.exchange("http://dataservice.accuweather.com/forecasts/v1/daily/5day/" + idVille + "?apikey=q80rdb2MDAlzUFIxOE18UaeMAKZwbaA1&language=fr-fr",
+					HttpMethod.GET, null, new ParameterizedTypeReference<String>() {}, idVille).getBody();
+
+			return resultatFinal;
+		}
 
 		@Bean
 		public RestTemplate restTemplate() {
