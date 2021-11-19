@@ -1,5 +1,6 @@
 package com.projet.ville;
 
+import com.google.gson.Gson;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
@@ -12,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
+
+import java.util.Map;
 
 @SpringBootApplication
 public class VilleApplication {
@@ -30,10 +33,21 @@ public class VilleApplication {
 		@ApiOperation(value = "Recupération detailVille", response = CurrentController.class, tags = "getDetailVille")
 		@RequestMapping(value = "/detailVille/{nomVille}", method = RequestMethod.GET)
 		public String getCity(@PathVariable String nomVille) {
-			String response = restTemplate.exchange("http://dataservice.accuweather.com/locations/v1/cities/search?apikey=tiRwrZIHTvt6t8A7AWQG6k3ugiDnHrTX&q=" + nomVille + "&language=fr-fr",
+			String response = restTemplate.exchange("http://dataservice.accuweather.com/locations/v1/cities/search?apikey=q80rdb2MDAlzUFIxOE18UaeMAKZwbaA1&q=" + nomVille + "&language=fr-fr",
 					HttpMethod.GET, null, new ParameterizedTypeReference<String>() {}, nomVille).getBody();
-			return response;
 
+		// On parse le resultat de la requête pour récupérer le code de la ville
+			String json = response;
+			json = json.substring(1, json.length() - 1);
+			Map jsonJavaRootObject = new Gson().fromJson(json, Map.class);
+			//resultat de la ville dans idVille qui devient NomVille
+			String idVille = (String) jsonJavaRootObject.get("Key");
+			//On utilise l'id de la ville et on lui passe son nom.
+			String resultatFinal = restTemplate.exchange("http://dataservice.accuweather.com/currentconditions/v1/" + idVille + "?apikey=q80rdb2MDAlzUFIxOE18UaeMAKZwbaA1&language=fr-fr",
+					HttpMethod.GET, null, new ParameterizedTypeReference<String>() {}, idVille).getBody();
+
+			return resultatFinal;
+			//return response;
 		}
 
 

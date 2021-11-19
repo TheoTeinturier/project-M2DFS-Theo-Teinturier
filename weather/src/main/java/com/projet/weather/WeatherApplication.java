@@ -10,8 +10,7 @@ import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
-import org.json.JSONArray;
-import org.json.JSONObject;
+
 
 @SpringBootApplication
 public class 	WeatherApplication {
@@ -29,11 +28,14 @@ public class 	WeatherApplication {
 		@ApiOperation(value = "Récupération météo", response = CurrentController.class, tags = "getMeteoIdVille")
 		@RequestMapping(value = "/meteoVille/{key}", method = RequestMethod.GET)
 		public String getMeteoIdVille(@PathVariable String key) {
-			String response = restTemplate.exchange("http://dataservice.accuweather.com/currentconditions/v1/{key}?apikey=tiRwrZIHTvt6t8A7AWQG6k3ugiDnHrTX&language=fr-fr",
+			String response = restTemplate.exchange("http://dataservice.accuweather.com/currentconditions/v1/{key}?apikey=q80rdb2MDAlzUFIxOE18UaeMAKZwbaA1&language=fr-fr",
 					HttpMethod.GET, null, new ParameterizedTypeReference<String>() {
 					}, key).getBody();
 			return response;
+
+
 		}
+
 
 
 		@Bean
